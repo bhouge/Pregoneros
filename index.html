@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Pregoneros</title>
+<link href="styles/Pregoneros.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<h1>Pregoneros</h1>
+
+<div id="buttons" align="center">
+
+<button onclick="buttonClicked(0)">Pregonero 1</button>
+<button onclick="buttonClicked(1)">Pregonero 2</button>
+<button onclick="buttonClicked(2)">Pregonero 3</button>
+
+</div>
+
+<script src="scripts/BufferLoader.js"></script>
+
+<script type="text/javascript">
+
+var AudioContext = (window.AudioContext || window.webkitAudioContext);
+var audioCtx = new AudioContext();
+
+var gainNode = audioCtx.createGain();
+gainNode.connect(audioCtx.destination);
+
+var audioBuffers = [];
+var buffersAreLoaded = false;
+
+var fileList = ['130803_14_mason2.13 1.wav',
+       		 'Ajo... (Buena Voz).108 1.wav',
+    		 'Ajo... (Buena Voz).110 1.wav',
+    		 'Ajo... (Buena Voz).112 1.wav',
+    		 'Compro oro_vox2.133 2.wav',
+    		 'El Pan.60 2.wav',
+    		 'El caramelo de chocolate.60 2.wav',
+    		 'El caramelo de chocolate.74 2.wav',
+    		 'El caramelo de chocolate.97 1.wav',
+    		 'El casco de toronja.52 1.wav',
+    		 'Lechuga, ajo y cebolla mora.76 2.wav',
+    		 'Lechuga, ajo y cebolla mora.93 1.wav',
+    		 'Miel..._1.65 1.wav',
+    		 'Miel..._1.66 1.wav',
+    		 'Miel..._1.72 1.wav',
+    		 'Pan_1.112 2.wav',
+    		 'Picadillo condimentado.4 1.wav'];
+
+function getRandomFileNames(fileList, desiredFileNumber) {
+	var randomFiles = [];
+	if (fileList.length >= desiredFileNumber) {
+		var currentFile;
+		while (randomFiles.length < desiredFileNumber) {
+			var newFileIndex = Math.floor(Math.random() * fileList.length);
+			newFile = fileList[newFileIndex];
+			if (randomFiles.indexOf(newFile) < 0) {
+				randomFiles.push(newFile);
+			}
+		}
+	} else {
+		randomFiles = fileList;
+	}
+	return randomFiles;
+}
+
+var randomFiles = getRandomFileNames(fileList, 3);
+//alert(randomFiles);
+
+bufferLoader = new BufferLoader(audioCtx, 
+		'sounds/compressed/',
+		randomFiles, 
+		 finishedLoading);
+bufferLoader.load();
+
+function finishedLoading(bufferList) {
+	for (var i = 0; i < bufferList.length; ++i) {
+		audioBuffers[i] = bufferList[i];
+	}
+	buffersAreLoaded = true;
+	//alert(audioBuffers);
+}
+
+function buttonClicked(e) {
+	var pregonero = audioCtx.createBufferSource();
+	pregonero.buffer = audioBuffers[e];
+	pregonero.connect(gainNode);
+	pregonero.start();
+}
+
+
+</script>
+
+</body>
+</html>

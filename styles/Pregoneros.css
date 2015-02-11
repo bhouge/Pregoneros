@@ -1,0 +1,43 @@
+@CHARSET "UTF-8";
+
+body {
+	background-color: #ffffff;
+}
+
+h1 {
+	font: 12px/14px sans-serif;
+	font-size: 3rem; 
+	font-weight: bold;
+	text-align: center;
+	color: red; 
+}
+
+div {
+}
+
+button {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	font: 12px/14px sans-serif;
+    background-color: #0088cc;
+    background-image: linear-gradient(to bottom,  #6666ff 0%, #0000ff 100%); 
+    text-shadow: 1px 1px 1px red;  
+    text-align: center;
+    color: white;
+    border: none;
+    width: 300px;
+    font-size: 1.6rem; 
+    line-height: 2rem;
+    padding: 2.5rem; 
+    
+    transition: 1s all;
+    -webkit-transition: 1s all;
+}
+
+button:hover, button:focus {
+  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.7);
+  background-color: #ff0000;
+  background-image: linear-gradient(to bottom,  #ff6666 0%, #ff0000 100%);
+  opacity: 0.5;
+}
